@@ -1,0 +1,10 @@
+name := "ForceSamples"
+version := "1.0"
+scalaVersion := "2.10.4"
+libraryDependencies += "org.apache.httpcomponents" % "httpclient" % "4.1.2"
+libraryDependencies += "org.json" % "org.json" % "chargebee-1.0"
+libraryDependencies += "org.skife.com.typesafe.config" % "typesafe-config" % "0.3.0"
+libraryDependencies += "io.spray" %%  "spray-json" % "1.3.2"
+libraryDependencies += "org.json4s" % "json4s-native_2.10" % "3.2.4"
+libraryDependencies += "com.google.code.gson" % "gson" % "1.7.1"
+
