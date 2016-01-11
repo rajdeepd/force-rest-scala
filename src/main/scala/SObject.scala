@@ -3,6 +3,8 @@ import org.apache.commons._
 import org.apache.http._
 import org.apache.http.client._
 import org.apache.http.client.methods.HttpPost
+import org.apache.http.client.methods.HttpDelete
+import org.apache.http.client.methods.HttpPatch
 import org.apache.http.impl.client.DefaultHttpClient
 import java.util.ArrayList
 import org.apache.http.message.BasicNameValuePair
@@ -39,17 +41,6 @@ class SObject(sObjectN : String) {
     }
 
     def createSObject(jsonData : String)  =  {
-    	/*
-    	access_token = get_access_token()['access_token']
-	    access_token_header = {'Authorization': 'Bearer ' + access_token,
-	                           'Content-type': 'application/json'}
-
-	    url = base_url + object_name
-	    json_data = json.dumps(data)
-
-	    conn = get_connection()
-	    conn.request("POST", url, json_data, access_token_header)
-    	*/
     	val host = "https://ap2.salesforce.com"
 		val baseUrl = "/services/data/v35.0/sobjects/"
 		val util = new Util()
@@ -69,13 +60,38 @@ class SObject(sObjectN : String) {
 		// send the post request
 		val response = (new DefaultHttpClient).execute(post)
 		println(response)
-		//return response
 
     }
 
-    def deleteSObject() {
+    def deleteSObject(objectId: String) {
+    	val host = "https://ap2.salesforce.com"
+		val baseUrl = "/services/data/v35.0/sobjects/"
+		val util = new Util()
 
+		val accessToken = util.getAccessToken()
+		println(accessToken)
+		val url = host + baseUrl + sObjectName + "/" + objectId
+		val delete = new HttpDelete(url);
+		delete.addHeader("Authorization", "Bearer " + accessToken)
+		delete.setHeader("Content-type", "application/json")
+
+		val response = (new DefaultHttpClient).execute(delete)
+		println(response)
     }
 
+    def patchSObject(objectId: String , jsonData: String) {
+    	val host = "https://ap2.salesforce.com"
+		val baseUrl = "/services/data/v35.0/sobjects/"
+		val util = new Util()
 
+		val accessToken = util.getAccessToken()
+		println(accessToken)
+		val url = host + baseUrl + sObjectName + "/" + objectId
+		val patch = new HttpPatch(url);
+		patch.addHeader("Authorization", "Bearer " + accessToken)
+		patch.setHeader("Content-type", "application/json")
+		patch.setEntity(new StringEntity(jsonData))
+		val response = (new DefaultHttpClient).execute(patch)
+		println(response)
+    }
 }
