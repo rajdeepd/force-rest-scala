@@ -94,4 +94,25 @@ class SObject(sObjectN : String) {
 		val response = (new DefaultHttpClient).execute(patch)
 		println(response)
     }
+
+    def executeSOQL(soql: String): String = {
+    	//curl https://na1.salesforce.com/services/data/v20.0/query/?q=SELECT+name+from+Account -H 
+    	//"Authorization: Bearer token"
+    	val host = "https://ap2.salesforce.com"
+		val baseUrl = "/services/data/v35.0/query/?q="
+		val util = new Util()
+
+		val accessToken = util.getAccessToken()
+		println("accessToken: " + accessToken)
+		val url = host + baseUrl  + soql
+		println("url: " + url)
+		val request = new HttpGet(url)
+		request.addHeader("Authorization", "Bearer " + accessToken)
+		request.addHeader("Content-type", "application/json")
+		val client = new DefaultHttpClient
+		val response = client.execute(request)
+		val handler = new BasicResponseHandler()
+		val body = handler.handleResponse(response)
+		return body
+    }
 }

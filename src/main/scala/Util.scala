@@ -20,7 +20,7 @@ case class Token(access_token: String, instance_url: String,
 	token_type: String,
 	issued_at: String,
 	signature: String)
-	
+
 class Util {
 	def getAccessToken() : String = {
 	    	
@@ -42,14 +42,13 @@ class Util {
                           "&username=" + UserName +
                           "&password=" + PassWord
 
-
                 val client = new DefaultHttpClient
                 val post = new HttpPost(loginURL)
                 val handler = new BasicResponseHandler();
                 val response = client.execute(post)
-                
+                println("response:" +  response)
                 val body = handler.handleResponse(response);
-                //println(response)
+                println(response)
                 val gson = new Gson
 		        val jsonObject = gson.fromJson(body, classOf[Token])
 		        access_token = jsonObject.access_token
