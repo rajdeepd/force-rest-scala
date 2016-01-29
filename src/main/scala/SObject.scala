@@ -11,8 +11,6 @@ import org.apache.http.message.BasicNameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
 import org.apache.http.impl.client.BasicResponseHandler
 import org.apache.http.client.ResponseHandler
-//import org.json.JSONObject
-//import org.json.JSONTokener
 import com.typesafe.config._
 import com.google.gson.Gson
 import org.apache.http.client.methods.HttpGet
@@ -20,6 +18,8 @@ import org.apache.http.entity.StringEntity
 
 class SObject(sObjectN : String) {
 	var sObjectName: String = sObjectN
+	val HOST = "https://ap2.salesforce.com"
+	val BASE_URL = "/services/data/v35.0/sobjects/"
 
 	def getList() : String = {
 		val host = "https://ap2.salesforce.com"
@@ -96,8 +96,6 @@ class SObject(sObjectN : String) {
     }
 
     def executeSOQL(soql: String): String = {
-    	//curl https://na1.salesforce.com/services/data/v20.0/query/?q=SELECT+name+from+Account -H 
-    	//"Authorization: Bearer token"
     	val host = "https://ap2.salesforce.com"
 		val baseUrl = "/services/data/v35.0/query/?q="
 		val util = new Util()
